@@ -1,0 +1,30 @@
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+ 
+  <div class="details content">
+      <h2><%= blog.title%></h2>
+      <div class="content">
+          <p><%=blog.body%></p>
+      </div>
+      <a  data-doc='<%=blog._id%>' class="delete">Delete</a>
+  </div>
+    <%- include('./partials/footer.ejs') %>
+
+    <script>
+        const trashcan=document.querySelector('.delete')///a tagi tanimlandi
+        trashcan.addEventListener('click',(e)=>{
+        const endPoint='/blogs/'+trashcan.dataset.doc;
+        ///id yi aldim
+        fetch(endPoint,{
+            method:'DELETE' //id yi ve method tipini yolladim
+        })
+        .then((res)=>res.json())///gelen datayi json a cevirdim
+        .then(data=>window.location.href=data.redirect)///gelen datayi kullanip front-end de redirect yaptim
+        .catch(err=>console.log(err))
+        })
+        
+    </script>
+</body>
+</html>
+
